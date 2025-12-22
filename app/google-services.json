@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "46442383692",
+    "project_id": "jack-menuku",
+    "storage_bucket": "jack-menuku.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46442383692:android:7086057450f591b16c67e9",
+        "android_client_info": {
+          "package_name": "com.example.menuku"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKr1kjgs7aDCQEAtgt8uL5ROo5GjNC0_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
