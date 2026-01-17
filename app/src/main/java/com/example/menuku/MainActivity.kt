@@ -3,45 +3,66 @@ package com.example.menuku
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.menuku.ui.theme.MenuKuTheme
+import com.example.menuku.view.LoginScreen
+import com.example.menuku.view.controllNavigasi.PetaNavigasi
+import com.example.menuku.view.viewmodel.LoginViewModel
+import com.example.menuku.view.viewmodel.LoginState
+
+
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
         setContent {
             MenuKuTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+
+                val viewModel: LoginViewModel = viewModel()
+                val loginState by viewModel.loginState.collectAsState()
+
+                when (val state = loginState) {
+
+                    is LoginState.Success -> {
+                        PetaNavigasi()
+                    }
+
+                    is LoginState.Error -> {
+                        LoginScreen(
+                            isLoading = false,
+                            errorMessage = state.message,
+                            onLoginClick = { email, password ->
+                                viewModel.login(email, password)
+                            }
+                        )
+                    }
+
+                    is LoginState.Loading -> {
+                        LoginScreen(
+                            isLoading = true,
+                            errorMessage = null,
+                            onLoginClick = { email, password ->
+                                viewModel.login(email, password)
+                            }
+                        )
+                    }
+
+                    else -> {
+                        LoginScreen(
+                            isLoading = false,
+                            errorMessage = null,
+                            onLoginClick = { email, password ->
+                                viewModel.login(email, password)
+                            }
+                        )
+                    }
                 }
+
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MenuKuTheme {
-        Greeting("Android")
     }
 }
