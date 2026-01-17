@@ -22,46 +22,27 @@ class MainActivity : ComponentActivity() {
         setContent {
             MenuKuTheme {
 
-                val viewModel: LoginViewModel = viewModel()
-                val loginState by viewModel.loginState.collectAsState()
+                val loginViewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+                val loginState by loginViewModel.loginState.collectAsState()
 
-                when (val state = loginState) {
+                when (loginState) {
 
                     is LoginState.Success -> {
+                        // 🔥 SUDAH LOGIN → DASHBOARD
                         PetaNavigasi()
                     }
 
-                    is LoginState.Error -> {
-                        LoginScreen(
-                            isLoading = false,
-                            errorMessage = state.message,
-                            onLoginClick = { email, password ->
-                                viewModel.login(email, password)
-                            }
-                        )
-                    }
-
-                    is LoginState.Loading -> {
-                        LoginScreen(
-                            isLoading = true,
-                            errorMessage = null,
-                            onLoginClick = { email, password ->
-                                viewModel.login(email, password)
-                            }
-                        )
-                    }
-
                     else -> {
+                        // 🔐 BELUM LOGIN → LOGIN SCREEN
                         LoginScreen(
-                            isLoading = false,
-                            errorMessage = null,
+                            isLoading = loginState is LoginState.Loading,
+                            errorMessage = (loginState as? LoginState.Error)?.message,
                             onLoginClick = { email, password ->
-                                viewModel.login(email, password)
+                                loginViewModel.login(email, password)
                             }
                         )
                     }
                 }
-
             }
         }
     }
