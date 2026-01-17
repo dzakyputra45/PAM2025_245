@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">MenuKu</string>
+    <string name="login_title">Manager Login</string>
+    <string name="login_button">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="welcome">Selamat Datang</string>
+    <string name="manager_dashboard">Manager MenuKu</string>
+    <string name="search_menu">Cari Menu</string>
+    <string name="filter_category">Filter Kategori</string>
+    <string name="menu_available">Tersedia</string>
+    <string name="menu_unavailable">Habis</string>
+    <string name="menu_detail">Detail</string>
+    <string name="add_menu">Tambah Menu</string>
+    <string name="nama">Nama Menu</string>
+    <string name="harga">Harga</string>
 </resources>
